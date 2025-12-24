@@ -17,10 +17,10 @@
                     {% if session.user_id %}
                         <span class="text-gray-700">Hello, {{ session.username }}!</span>
                         <a href="{{ url_for('dashboard') }}" class="text-gray-700 hover:text-blue-600">Dashboard</a>
-                        <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</a>
+                        <a href="{{ url_for('logout') }}" class="bg-red-500 text-white px-4 py-2 hover:bg-red-600">Logout</a>
                     {% else %}
                         <a href="{{ url_for('login') }}" class="text-gray-700 hover:text-blue-600">Login</a>
-                        <a href="{{ url_for('signup') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Sign Up</a>
+                        <a href="{{ url_for('signup') }}" class="bg-zinc-900 text-white px-4 py-2 hover:bg-zinc-800">Sign Up</a>
                     {% endif %}
                 </div>
             </div>

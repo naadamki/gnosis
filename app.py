@@ -40,7 +40,7 @@ def login_required(f):
 def get_quote():
     try:
         response = requests.get(
-            'https://api.api-ninjas.com/v1/quotes?category=happiness',
+            'https://api.api-ninjas.com/v2/quotes?categories=happiness',
             headers={'X-Api-Key': API_NINJAS_KEY}
         )
         if response.status_code == 200:

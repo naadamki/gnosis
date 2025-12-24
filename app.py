@@ -1,13 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 import os
+import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# API Ninjas API Key - Get free key at https://api-ninjas.com/
+API_NINJAS_KEY = 'YOUR_API_NINJAS_KEY_HERE'
 
 db = SQLAlchemy(app)
 
@@ -32,9 +36,86 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# API Ninjas helper functions
+def get_quote():
+    try:
+        response = requests.get(
+            'https://api.api-ninjas.com/v1/quotes?category=happiness',
+            headers={'X-Api-Key': API_NINJAS_KEY}
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data[0] if data else {'quote': 'No quote available', 'author': 'Unknown'}
+    except:
+        pass
+    return {'quote': 'Unable to fetch quote', 'author': 'Unknown'}
+
+def get_trivia():
+    try:
+        response = requests.get(
+            'https://api.api-ninjas.com/v1/trivia',
+            headers={'X-Api-Key': API_NINJAS_KEY}
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data[0] if data else {'question': 'No trivia available', 'answer': ''}
+    except:
+        pass
+    return {'question': 'Unable to fetch trivia', 'answer': ''}
+
+def get_riddle():
+    try:
+        response = requests.get(
+            'https://api.api-ninjas.com/v1/riddles',
+            headers={'X-Api-Key': API_NINJAS_KEY}
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data[0] if data else {'title': 'No riddle available', 'question': '', 'answer': ''}
+    except:
+        pass
+    return {'title': 'Unable to fetch riddle', 'question': '', 'answer': ''}
+
+def get_joke():
+    try:
+        response = requests.get(
+            'https://api.api-ninjas.com/v1/jokes',
+            headers={'X-Api-Key': API_NINJAS_KEY}
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data[0] if data else {'joke': 'No joke available'}
+    except:
+        pass
+    return {'joke': 'Unable to fetch joke'}
+
+def get_dadjoke():
+    try:
+        response = requests.get(
+            'https://api.api-ninjas.com/v1/dadjokes',
+            headers={'X-Api-Key': API_NINJAS_KEY}
+        )
+        if response.status_code == 200:
+            data = response.json()
+            return data[0] if data else {'joke': 'No dad joke available'}
+    except:
+        pass
+    return {'joke': 'Unable to fetch dad joke'}
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    quote = get_quote()
+    trivia = get_trivia()
+    riddle = get_riddle()
+    joke = get_joke()
+    dadjoke = get_dadjoke()
+    
+    return render_template('index.html', 
+                         quote=quote,
+                         trivia=trivia,
+                         riddle=riddle,
+                         joke=joke,
+                         dadjoke=dadjoke)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

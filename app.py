@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # API Ninjas API Key - Get free key at https://api-ninjas.com/
-API_NINJAS_KEY = 'YOUR_API_NINJAS_KEY_HERE'
+API_NINJAS_KEY = 'YOUR_+PfEP0F78yN7Bv7RO0uw+A==myZNDLRXn8q1cxgk'
 
 db = SQLAlchemy(app)
 

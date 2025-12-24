@@ -11,21 +11,23 @@
 
     <div class="text-center max-w-2xl px-6">
         <div class="mb-8">
-            <h2 id="question"class="text-3xl font-light leading-tight text-zinc-100">
+            <h2 id="question" class="text-3xl font-light leading-tight text-zinc-100">
                 {{ question }}
             </h2>
-            <p id="answer" class="hidden text-2xl font-semibold text-emerald-400">
-                Answer: <span class="text-white">{{ answer }}</span>
+            <p id="answer" class="hidden text-4xl font-semibold text-emerald-400">
+                {{ answer }}
             </p>
-        </div>
-        <div>    
-            <button id="show-btn" 
-                    class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition-colors"
-                    onclick="document.getElementById('answer').classList.remove('hidden'); this.classList.add('hidden'); document.getElementById('question').classList.add('hidden');">
-                Show Answer
-            </button>
+            <div class="mt-8">    
+                <button id="show-btn" 
+                        class="bg-emerald-400 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-none transition-colors"
+                        onclick="document.getElementById('answer').classList.remove('hidden'); this.classList.add('hidden'); document.getElementById('question').classList.add('hidden');">
+                    Show Answer
+                </button>
+            </div>
+
         </div>
     </div>
 
+    
 </body>
 </html>

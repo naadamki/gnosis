@@ -1,33 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gnosis</title>
+{% extends "base.html" %}
+
+{% block title %}Home - Flask Auth App{% endblock %}
+
+{% block content %}
+<div class="text-center py-20">
+    <h1 class="text-5xl font-bold text-gray-900 mb-4">Welcome to MyApp</h1>
+    <p class="text-xl text-gray-600 mb-8">A simple Flask application with user authentication</p>
     
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body class="bg-zinc-900 text-white min-h-screen flex items-center justify-center font-sans">
-
-    <div class="text-center max-w-2xl px-6">
-        <div class="mb-8">
-            <h2 id="question" class="text-3xl font-light leading-tight text-zinc-100">
-                {{ question }}
-            </h2>
-            <p id="answer" class="hidden text-4xl font-semibold text-emerald-400">
-                {{ answer }}
-            </p>
-            <div class="mt-8">    
-                <button id="show-btn" 
-                        class="bg-emerald-400 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-none transition-colors"
-                        onclick="document.getElementById('answer').classList.remove('hidden'); this.classList.add('hidden'); document.getElementById('question').classList.add('hidden');">
-                    Show Answer
-                </button>
-            </div>
-
-        </div>
+    {% if not session.user_id %}
+    <div class="space-x-4">
+        <a href="{{ url_for('signup') }}" class="bg-blue-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-600 inline-block">Get Started</a>
+        <a href="{{ url_for('login') }}" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-lg text-lg hover:bg-gray-300 inline-block">Login</a>
     </div>
-
-    
-</body>
-</html>
+    {% else %}
+    <a href="{{ url_for('dashboard') }}" class="bg-blue-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-600 inline-block">Go to Dashboard</a>
+    {% endif %}
+</div>
+{% endblock %}
